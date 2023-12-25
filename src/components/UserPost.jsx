@@ -1,8 +1,11 @@
 import { Avatar, Box, Flex, Image, Text } from "@chakra-ui/react"
 import { BsThreeDots } from "react-icons/bs"
 import { Link } from "react-router-dom"
+import Actions from "./Actions"
+import { useState } from "react"
 
-const UserPost = () => {
+const UserPost = ({ likes, replies, postImg, postTitle }) => {
+     const [liked, setLiked] = useState(false);
      return (
           <>
                <Link to={"mark/post/1"}>
@@ -27,14 +30,26 @@ const UserPost = () => {
                                    </Flex>
                                    <Flex alignItems={"center"} gap={4}>
                                         <Text fontSize={"sm"} color={"gray.light"}>1d</Text>
-                                   <BsThreeDots />
+                                        <BsThreeDots />
                                    </Flex>
                               </Flex>
 
-                              <Text fontSize={"sm"}>This is my first post.</Text>
-                              <Box borderRadius={6} overflow={"hidden"} border={"1px solid"} borderColor={"gray.light"}>
-                                   <Image src={"/post1.png"} w={"full"} />
-                              </Box>
+                              <Text fontSize={"sm"}>{postTitle}</Text>
+                              {postImg && (
+                                   <Box borderRadius={6} overflow={"hidden"} border={"1px solid"} borderColor={"gray.light"}>
+                                        <Image src={postImg} w={"full"} />
+                                   </Box>
+                              )}
+
+                              <Flex gap={3} my={1}>
+                                   <Actions liked={liked} setLiked={setLiked} />
+                              </Flex>
+
+                              <Flex gap={2} alignItems={"center"}>
+                                   <Text color={"gray.light"} fontSize={"sm"}>{replies} replies</Text>
+                                   <Box w={0.5} h={0.5} bg={"gray.light"} borderRadius={"full"}></Box>
+                                   <Text color={"gray.light"} fontSize={"sm"}>{likes} likes</Text>
+                              </Flex>
                          </Flex>
 
                     </Flex>
