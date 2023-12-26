@@ -8,7 +8,7 @@ const UserPost = ({ likes, replies, postImg, postTitle }) => {
      const [liked, setLiked] = useState(false);
      return (
           <>
-               <Link to={"mark/post/1"}>
+               <Link to={"/mark/post/1"}>
                     <Flex gap={3} mb={4} py={5}>
                          {/* profile image and the vertical line or comment people img */}
                          <Flex flexDirection={"column"} alignItems={"center"}>
