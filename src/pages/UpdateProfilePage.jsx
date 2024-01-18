@@ -52,6 +52,7 @@ export default function UpdateProfilePage() {
                }
                showToast("Success", "Profile updated successfully", "success");
                setUser(data);
+               // insted of data we use data.user because we are sending user object from backend and we are updating user object in frontend
                localStorage.setItem("user-threads", JSON.stringify(data.user));
           } catch (error) {
                showToast("Error", error, "error");

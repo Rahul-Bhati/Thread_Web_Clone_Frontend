@@ -4,7 +4,7 @@ import { BsInstagram } from "react-icons/bs";
 import { CgMoreO } from "react-icons/cg";
 
 
-const UserHeader = () => {
+const UserHeader = ({ user }) => {
      const toast = useToast();
      const copyURL = () => {
           navigator.clipboard.writeText(window.location.href).then(() => {
@@ -20,25 +20,29 @@ const UserHeader = () => {
           <VStack gap={4} align={"start"}>
                <Flex justifyContent={"space-between"} w={"full"}>
                     <Box>
-                         <Text fontSize={"2xl"} fontWeight={"bold"}>Mark Zuckerbarg</Text>
+                         <Text fontSize={"2xl"} fontWeight={"bold"}>{user.name}</Text>
                          <Flex gap={2} alignItems={"center"}>
-                              <Text fontSize={"sm"}>markzuckerbarg</Text>
+                              <Text fontSize={"sm"}>{user.username}</Text>
                               <Text fontSize={{
                                    base: "xs", md: "sm", lg: "md", xl: "md"
                               }} bg={"gray.dark"} color={"gray.light"} p={1} borderRadius={"full"}>thread.net</Text>
                          </Flex>
                     </Box>
                     <Box>
-                         <Avatar size={{
+                         {user.profilePic && <Avatar size={{
                               base: "md", md: "xl", lg: "2xl", xl: "2xl"
-                         }} name="Mark Zuckerbarg" src={"/zuck-avatar.png"} />
+                         }} name={user.name} src={user.profilePic} />}
+
+                         {!user.profilePic && <Avatar size={{
+                              base: "md", md: "xl", lg: "2xl", xl: "2xl"
+                         }} name={user.name} src="https://bit.ly/broken-link" />}
                     </Box>
                </Flex>
 
-               <Text>I am trying to make the world a more open place.</Text>
+               <Text>{user.bio}</Text>
                <Flex w={"full"} justifyContent={"space-between"}>
                     <Flex gap={2} alignItems={"center"}>
-                         <Text color={"gray.light"}>1,337 followers</Text>
+                         <Text color={"gray.light"}>{user.followers.length} followers</Text>
                          <Box w="1" h="1" bg={"gray.light"} borderRadius={"full"}></Box>
                          <Link className="profile_link">instagram.com</Link>
                     </Flex>

@@ -32,8 +32,11 @@ const colors = {
 
 const theme = extendTheme({ config, styles, colors });
 
+// because of strict mode it renders twice so we use createRoot to render only once and it is also recommended by react team to use createRoot instead of render 
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
+    {/* // StrictMode is a tool for highlighting potential problems in an application. Like Fragment, StrictMode does not render any visible UI. It activates additional checks and warnings for its descendants. */}
     <RecoilRoot>
       <BrowserRouter>
         <ChakraProvider theme={theme}>
