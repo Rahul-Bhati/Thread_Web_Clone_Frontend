@@ -26,12 +26,13 @@ export default function UpdateProfilePage() {
           password: "",
      });
      const fileRef = useRef(null);
-     const [updating, setUpdating] = useState(false);
 
      const showToast = useShowToast();
 
      const { handleImageChange, imgUrl } = usePreviewImg();
 
+     const [updating, setUpdating] = useState(false); // this is for the update profile button
+     
      const handleSubmit = async (e) => {
           e.preventDefault();
           if (updating) return;
