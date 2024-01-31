@@ -23,11 +23,11 @@ const Header = () => {
                          <AiFillHome size={24} />
                     </Link>
                )}
-               {!user && (
+               {/* {!user && (
                     <Link as={RouterLink} to={"/auth"} onClick={() => setAuthScreen("login")}>
                          Login
                     </Link>
-               )}
+               )} */}
 
                <Image
                     cursor={"pointer"}
@@ -36,8 +36,13 @@ const Header = () => {
                     src={colorMode === "dark" ? "/light-logo.svg" : "/dark-logo.svg"}
                     onClick={toggleColorMode}
                />
-
                {user && (
+                    <Link as={RouterLink} to={`/${user.username}`}>
+                         <RxAvatar size={24} />
+                    </Link>
+               )}
+
+               {/* {user && (
                     <Flex alignItems={"center"} gap={4}>
                          <Link as={RouterLink} to={`/${user.username}`}>
                               <RxAvatar size={24} />
@@ -48,21 +53,21 @@ const Header = () => {
                          <Link as={RouterLink} to={`/settings`}>
                               <MdOutlineSettings size={20} />
                          </Link>
-                         {/* <Button size={"xs"} onClick={logout}>
+                          <Button size={"xs"} onClick={logout}>
                               <FiLogOut size={20} />
-                         </Button> */}
+                         </Button> 
 
                          <Button size={"xs"} >
                               <FiLogOut size={20} />
                          </Button>
                     </Flex>
-               )}
+               )} */}
 
-               {!user && (
+               {/* {!user && (
                     <Link as={RouterLink} to={"/auth"} onClick={() => setAuthScreen("signup")}>
                          Sign up
                     </Link>
-               )}
+               )} */}
           </Flex>
      );
 };
