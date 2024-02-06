@@ -4,19 +4,22 @@ import { Link, useNavigate } from "react-router-dom";
 import Actions from "./Actions";
 import { useEffect, useState } from "react";
 import useShowToast from "../hooks/useShowToast";
+import { DeleteIcon } from "@chakra-ui/icons";
+import { useRecoilState, useRecoilValue } from "recoil";
+import userAtom from "../atoms/userAtom";
+import postsAtom from "../atoms/postsAtom";
 
-const Post = ({ post, postedBy, key }) => {
-  const [liked, setLiked] = useState(false);
-  console.log(postId, post, postedBy)
+const Post = ({ post, postedBy }) => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const toast = useShowToast();
+  const currentUser = useRecoilValue(userAtom);
+  const [posts, setPosts] = useRecoilState(postsAtom);
   useEffect(() => {
     const getUser = async () => {
       try {
         const res = await fetch("/api/users/profile/" + postedBy);
         const data = await res.json();
-        //    console.log(data);
 
         if (data.error) {
           toast("Error", data.message, "error");
@@ -32,9 +35,35 @@ const Post = ({ post, postedBy, key }) => {
 
     getUser();
   }, []);
+
+  const handleDeletePost = async (e) => {
+    try {
+      e.preventDefault();
+      if (
+        window.confirm("Are you sure you want to delete this post?") === false
+      )
+        return;
+      const res = await fetch(`/api/posts/${post._id}`, {
+        method: "DELETE",
+      });
+      const data = await res.json();
+
+      if (data.error) {
+        toast("Error", data.error, "error");
+        return;
+      }
+
+      toast("Success", "Post Deleted", "success");
+      setPosts(posts.filter((p) => p._id !== post._id));
+    } catch (error) {
+      toast("Error", error.message, "error");
+    }
+  };
+
+  // console.log(post, postedBy, user.username);
   return (
     <>
-      <Link to={`/${user?.username}/post/${key}`}>
+      <Link to={`/${user?.username}/post/${post._id}`}>
         <Flex gap={3} mb={4} py={5}>
           {/* profile image and the vertical line or comment people img */}
           <Flex flexDirection={"column"} alignItems={"center"}>
@@ -114,6 +143,10 @@ const Post = ({ post, postedBy, key }) => {
                 >
                   {formatDistanceToNow(post.createdAt)} ago
                 </Text>
+
+                {currentUser?._id === user?._id && (
+                  <DeleteIcon size={"xl"} onClick={handleDeletePost} />
+                )}
               </Flex>
             </Flex>
 
@@ -130,7 +163,7 @@ const Post = ({ post, postedBy, key }) => {
             )}
 
             <Flex gap={3} my={1}>
-              {/* <Actions post={post} /> */}
+              <Actions post={post} />
             </Flex>
           </Flex>
         </Flex>
